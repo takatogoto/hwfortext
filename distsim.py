@@ -32,7 +32,8 @@ def cossim(v1,v2):
     # Should return a number between -1 and 1
     
     ## TODO: delete this line and implement me
-    pass
+    return np.dot(v1,v2)/(np.linalg.norm(v1, ord=2)*np.linalg.norm(v2, ord=2))
+
 
 def show_nearest(table, v, exclude_w, n = 1, sim_metric=cossim):
     #table: lookup table obtained from load_table()
