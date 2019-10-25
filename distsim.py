@@ -23,7 +23,7 @@ def get_vector(w, table):
     # table: lookup table obtained from load_table()
     
     ## TODO: delete this line and implement me
-    pass
+    return table[w]
 
 
 def cossim(v1,v2):
