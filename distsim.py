@@ -49,5 +49,19 @@ def show_nearest(table, v, exclude_w, n = 1, sim_metric=cossim):
     #[(cat, 0.827517295965), (university, -0.190753135501)]
     
     ## TODO: delete this line and implement me
-    pass
+    exclud_table = table.copy()
+    if len(exclude_w) != 0:
+        for w in exclude_w:
+            _ = exclud_table.pop(w, None)
+
+    key_table = list(exclud_table.keys())
+    value_table = list(exclud_table.values())
+
+    dist = [sim_metric(value_table[i], v) for i in range(len(value_table))]
+    sortidx = sorted(range(len(dist)), reverse=True, key=lambda k: dist[k])
+    nearest = {}
+
+    for i in range(n):
+        nearest[key_table[sortidx[i]]] = dist[sortidx[i]]
+    return nearest.items()
 
