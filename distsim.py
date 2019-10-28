@@ -63,5 +63,5 @@ def show_nearest(table, v, exclude_w, n = 1, sim_metric=cossim):
 
     for i in range(n):
         nearest[key_table[sortidx[i]]] = dist[sortidx[i]]
-    return nearest.items()
+    return tuple(nearest.items())
 
