@@ -9,7 +9,7 @@ def main():
   parser.add_argument("-analogy", default="word-test.v3.txt", help="analogy file")
   parser.add_argument("-outfile", default="pred.glove.txt", help="w2v output file")
   
-  print(emb)
+  print(args.emb)
                                              
 
 if __name__ == '__main__':
