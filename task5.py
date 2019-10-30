@@ -11,6 +11,8 @@ def main():
   
   args = parser.parse_args()
   print(args.emb)
+  print(args.analogy)
+  print(args.outfile)
                                              
 
 if __name__ == '__main__':
