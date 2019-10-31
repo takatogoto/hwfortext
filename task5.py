@@ -56,7 +56,8 @@ def main():
           tn = 0.0
           ncbi = 0.0
           ncbv = 0.0
-          ncbx = 0.0b1 = 0.0
+          ncbx = 0.0
+          b1 = 0.0
           b5 = 0.0
           b10 = 0.0
           
