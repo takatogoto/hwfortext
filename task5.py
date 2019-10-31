@@ -1,7 +1,7 @@
 #!/usr/bin/env python
+from __future__ import division
 import argparse
 from pathlib import Path
-from __future__ import division
 from distsim import * # directory
 
 # complete this code
