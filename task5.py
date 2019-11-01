@@ -17,6 +17,10 @@ def main():
   analogy = args.analogy
   outfile = args.outfile
   
+  print('embbeding file is ', emb)
+  print('analogy file is ', analogy)
+  print('output file is ', outfile)
+  
   table = load_table(emb)
   
   # path
@@ -44,7 +48,7 @@ def main():
     for i, strline in enumerate(r):
       tn += 1.0
       if ':' in strline:
-        print(i, strline.strip('\n'))
+        #print(i, strline.strip('\n'))
         if i !=0:
 
           result = (gn + ': {best1:.2f} {best5:.2f} {best10:.2f}'.format(
@@ -103,6 +107,7 @@ def main():
   result = (gn + ': {best1:.2f} {best5:.2f} {best10:.2f}'.format(
       best1 =b1, best5=b5, best10=b10))
   outlist.append(result)
+  print(result)
 
   with outfilepath.open('a') as w:
     for s in outlist:
