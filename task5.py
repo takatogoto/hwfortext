@@ -28,8 +28,8 @@ def main():
   analogypath = Path(analogy)
   
   # open new file
-  f = open(outfilepath, 'w')
-  f.close()
+  #f = open(outfilepath, 'w')
+  #f.close() only python3
   
   outlist = [] # output list
   
@@ -109,9 +109,13 @@ def main():
   outlist.append(result)
   print(result)
 
-  with outfilepath.open('a') as w:
-    for s in outlist:
-      w.write(f'{s}\n')
+  #with outfilepath.open('a') as w:
+  #  for s in outlist:
+  #    w.write(f'{s}\n')
+  f = open(outfile, 'w')
+  for s in outlist:
+    f.write(s+'\n')
+  f.close()
                                               
 if __name__ == '__main__':
   main()
