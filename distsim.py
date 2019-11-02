@@ -2,7 +2,7 @@ from __future__ import division
 import sys,json,math
 import os
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
+
 
 def load_table(filename):
     # Returns a dictionary containing a {word: numpy array for a dense word vector} mapping.
@@ -59,9 +59,11 @@ def show_nearest(table, v, exclude_w, n = 1, sim_metric=cossim):
 
     dist = [sim_metric(value_table[i], v) for i in range(len(value_table))]
     sortidx = sorted(range(len(dist)), reverse=True, key=lambda k: dist[k])
-    nearest = {}
+    # nearest = {} # works only python3.7 or later
+    nearest =[]
 
     for i in range(n):
-        nearest[key_table[sortidx[i]]] = dist[sortidx[i]]
-    return tuple(nearest.items())
-
+        #nearest[key_table[sortidx[i]]] = dist[sortidx[i]]
+        nearest.append((key_table[sortidx[i]], dist[sortidx[i]]))
+    #return tuple(nearest.items())
+    return tuple(nearest)
