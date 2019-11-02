@@ -17,9 +17,9 @@ def main():
   analogy = args.analogy
   outfile = args.outfile
   
-  print('embbeding file is ', emb)
-  print('analogy file is ', analogy)
-  print('output file is ', outfile)
+  #print('embbeding file is ', emb)
+  #print('analogy file is ', analogy)
+  #print('output file is ', outfile)
   
   table = load_table(emb)
   
@@ -78,19 +78,21 @@ def main():
         v2 = get_vector(w2, table)
         v4 = get_vector(w4, table)
         v3_cal = v1 - v2 + v4
+        #print(type(w3)) ==> <type 'unicode'> in python2
 
         b1re = show_nearest(table, v3_cal, set([w1, w2, w4]), n=1)
         b5re = show_nearest(table, v3_cal, set([w1, w2, w4]), n=5)
         b10re = show_nearest(table, v3_cal, set([w1, w2, w4]), n=10)
+        #print(type(b1re[0][0])) ==> <type 'str'> in python2
       
         for tp in b1re:
-          if w3 in tp:
+          if str(w3) in tp:
             ncbi += 1.0
         for tp in b5re:
-          if w3 in tp:
+          if str(w3) in tp:
             ncbv += 1.0
         for tp in b10re:
-          if w3 in tp:
+          if str(w3) in tp:
             ncbx += 1.0
 
         # compute 1best 5best 10best
