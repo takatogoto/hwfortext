@@ -46,7 +46,6 @@ def main():
     next(r)
     #for strline in r:
     for i, strline in enumerate(r):
-      tn += 1.0
       if ':' in strline:
         #print(i, strline.strip('\n'))
         if i !=0:
@@ -68,6 +67,7 @@ def main():
         gn = strline.strip(':''\n')
 
       else:
+        tn += 1.0        
         # calculate w1-w2+w4
         W = strline.split()
         w1 = W[0]
