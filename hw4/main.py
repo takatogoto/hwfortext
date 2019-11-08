@@ -2,7 +2,7 @@
 import argparse
 import sys
 import os.path
-import os #
+# import os #
 
 class Batch:
     def __init__(self, X, Y):
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     except IOError as msg:
         parser.error(str(msg))
         
-    print os.getcwd() #
+    # print os.getcwd() #
     data = read_twitter(trainfile=args.train, evalfiles=args.eval)
     
     import tagger
