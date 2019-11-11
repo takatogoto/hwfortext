@@ -46,13 +46,13 @@ def token2features(sent, i, orig_len, add_neighs = True):
         ftrs.append("SENT_END")
 
     # the word itself
-    word = str(sent[i])
+    word = str(sent[i].encode("utf-8")) # str doesn't have an isnumeric method
     ftrs.append("WORD=" + word)
     ftrs.append("LCASE=" + word.lower())
     # some features of the word
     if word.isalnum():
         ftrs.append("IS_ALNUM")
-    if unicode(word.encode("utf-8")).isnumeric(): # str doesn't have an isnumeric method
+    if word.isnumeric(): # str doesn't have an isnumeric method
         ftrs.append("IS_NUMERIC")
     if word.isdigit():
         ftrs.append("IS_DIGIT")
