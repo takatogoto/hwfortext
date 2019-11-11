@@ -52,7 +52,7 @@ def token2features(sent, i, orig_len, add_neighs = True):
     # some features of the word
     if word.isalnum():
         ftrs.append("IS_ALNUM")
-    if word.isnumeric():
+    if unicode(word).isnumeric(): # str doesn't have an isnumeric method
         ftrs.append("IS_NUMERIC")
     if word.isdigit():
         ftrs.append("IS_DIGIT")
