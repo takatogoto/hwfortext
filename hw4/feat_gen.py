@@ -79,5 +79,6 @@ if __name__ == "__main__":
     ]
     preprocess_corpus(sents)
     for sent in sents:
+        orig_len = len(sent)
         for i in range(len(sent)):
             print(sent[i], ":", token2features(sent, i, orig_len))
