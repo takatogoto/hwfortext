@@ -47,6 +47,7 @@ def token2features(sent, i, orig_len, add_neighs = True):
 
     # the word itself
     word = str(sent[i]) # str doesn't have an isnumeric method
+    word = word.decode('utf-8')
     ftrs.append("WORD=" + word)
     ftrs.append("LCASE=" + word.lower())
     # some features of the word
