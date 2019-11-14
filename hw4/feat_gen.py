@@ -11,6 +11,7 @@ def preprocess_corpus(train_sents):
     Note that you can also call token2features here to aggregate feature counts, etc.
     """
     # matching lexicons
+    print('call preporcess')
     folder = 'lexicon/'
     loca = folder + 'location'
     pep = folder + 'people.person.lastnames'
