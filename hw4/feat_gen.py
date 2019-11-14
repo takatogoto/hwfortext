@@ -113,6 +113,9 @@ def token2features(sent, i, orig_len, add_neighs = True):
         return ftrs
 
     # previous/next word feats
+    
+    elif add_neighs and orig_len==0:
+        return mono_fea[i]
 
     else:
         assert len(mono_fea) == orig_len, 'expect[{0}], got[{1}]'.format(orig_len, len(mono_fea))
