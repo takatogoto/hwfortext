@@ -10,7 +10,38 @@ def preprocess_corpus(train_sents):
 
     Note that you can also call token2features here to aggregate feature counts, etc.
     """
-    pass
+    # matching lexicons
+    folder = 'lexicon/'
+    loca = folder + 'location'
+    pep = folder + 'people.person.lastnames'
+    bigd = folder + 'bigdict'
+
+    from pathlib import Path
+    def lexicon_list(path):
+        lexpath = Path(path)
+        lexlist=[]
+        with lexpath.open('r', encoding='utf-8') as r:
+            for i, strline in enumerate(r):
+                splitstr = str(strline.encode("utf-8")).split()
+                lexlist.extend(splitstr)
+        return lexlist
+    
+    global loca_list, peop_list, bigd_list
+
+    loca_list = lexicon_list(loca)
+    peop_list = lexicon_list(pep)
+    bigd_list = lexicon_list(bigd)
+
+
+    global mono_fea
+    mono_fea = []
+    for sent in train_sents:
+        #print sent
+        orig_len= len(sent)
+        #print "len", len(sent)
+        for i in range(len(sent)):
+            mono_fea.append(token2features(
+                sent, i, orig_len, add_neighs = False))
 
 def token2features(sent, i, orig_len, add_neighs = True):
     """Compute the features of a token.
@@ -31,49 +62,76 @@ def token2features(sent, i, orig_len, add_neighs = True):
     recursively add the same features, as computed for the neighbors. Of course, we do
     not want to recurse on the neighbors again, and then it is set to False (see code).
     """
-    
-    ftrs = []
-    # bias
-    ftrs.append("BIAS")
-    if i >= orig_len:
-        ftrs.append("<PAD>")
-        return ftrs
-    
-    # position features
-    if i == 0:
-        ftrs.append("SENT_BEGIN")
-    if i == orig_len-1:
-        ftrs.append("SENT_END")
+        # sent: a sentence, list of str
+    # i: index for computing feature extraction in sent
+    # orig_len: orignal length of sent
+    # add_neighs: flag for computing neighbors
+    # print add_neighs
 
-    # the word itself
-    word = str(sent[i]) # str doesn't have an isnumeric method
-    word = word.decode('utf-8')
-    ftrs.append("WORD=" + word)
-    ftrs.append("LCASE=" + word.lower())
-    # some features of the word
-    if word.isalnum():
-        ftrs.append("IS_ALNUM")
-    if word.isnumeric(): # str doesn't have an isnumeric method
-        ftrs.append("IS_NUMERIC")
-    if word.isdigit():
-        ftrs.append("IS_DIGIT")
-    if word.isupper():
-        ftrs.append("IS_UPPER")
-    if word.islower():
-        ftrs.append("IS_LOWER")
+
+    if not add_neighs:
+        #print "false"
+        ftrs = []
+        # bias
+        ftrs.append("BIAS")
+        if i >= orig_len:
+            ftrs.append("<PAD>")
+            return ftrs
+        
+        # position features
+        if i == 0:
+            ftrs.append("SENT_BEGIN")
+        if i == orig_len-1:
+            ftrs.append("SENT_END")
+
+        # the word itself
+        #word = unicode(str(sent[i]), 'utf-8') # str doesn't have an isnumeric method
+        word = str(sent[i])
+        
+        ftrs.append("WORD=" + word)
+        ftrs.append("LCASE=" + word.lower())
+
+        # some features of the word
+        if word.isalnum():
+            ftrs.append("IS_ALNUM")
+        if word.isnumeric(): # str doesn't have an isnumeric method
+            ftrs.append("IS_NUMERIC")
+        if word.isdigit():
+            ftrs.append("IS_DIGIT")
+        if word.isupper():
+            ftrs.append("IS_UPPER")
+        if word.islower():
+            ftrs.append("IS_LOWER")
+
+        # additional features of the word
+        if word in loca_list:
+            ftrs.append("IS_LOCAL")
+        if word in  peop_list:
+            ftrs.append("IS_PEOPLE")
+        if word in bigd_list:
+            ftrs.append("IS_BIGDICT")
+        return ftrs
 
     # previous/next word feats
-    if add_neighs:
-        if i > 0:
-            for pf in token2features(sent, i-1, orig_len, add_neighs = False):
-                ftrs.append("PREV_" + pf)
-        if i < len(sent)-1:
-            for pf in token2features(sent, i+1, orig_len, add_neighs = False):
-                ftrs.append("NEXT_" + pf)
 
+    else:
+        assert len(mono_fea) == orig_len, 'expect[{0}], got[{1}]'.format(orig_len, len(mono_fea))
+        import copy
+        ftrs = copy.copy(mono_fea[i])
+        #print 'ftrs', ftrs
+        if i > 0:
+            #print "iter", i, fea
+            for pf in mono_fea[i-1]:
+                ftrs.append("PREV_" + pf)
+                
+        if i < orig_len-1:
+            #print "iter", i,  mono_fea[i+1]
+            for pf in  mono_fea[i+1]:
+                #print "pf ", pf
+                ftrs.append("NEXT_" + pf)
     # return it!
     return ftrs
-
+    
 if __name__ == "__main__":
     sents = [
     [ "I", "love", "food" ]
