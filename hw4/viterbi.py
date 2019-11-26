@@ -26,9 +26,37 @@ def run_viterbi(emission_scores, trans_scores, start_scores, end_scores):
 
     # score set to 0
     scores = np.zeros(B)
-    y_pred = np.zeros((B, N))
+    y_pred = np.zeros((B, N), dtype=int)
+
+    # my code
+    #print 'B, N, L are', B, N, L
+    # create array for viteri score
+    T = np.zeros((B, N, L)) # BxNxL
+    backpointer = -np.zeros((B, N, L), dtype=int) # BxNxL
     
-    for i in range(N):
-        # stupid sequence
-        y_pred[:, i] = i * np.ones(B)
+    # initialize backpinter to last label
+    #backpointer[:, -1, :] = L+1
+
+    # initialize T
+    T[:, 0, :] = start_scores + emission_scores[:, 0, :] # BXL
+    backpointer[:, 0, :] = np.argmax(T[:, 0, :], axis=1).astype(int)
+    #print 'T i', 0, T[:, 0 , :]
+
+    
+    for i in range(N)[1:]:
+        for l in range(L) :
+            #calmax = np.tile(trans_scores[:, :, l].reshape(B,L), (B,1)) +T[:,i-1, :] # BxL
+            calmax = np.tile(trans_scores[:, :, l], (B,1)) +T[:,i-1, :]
+            #print "calmax shape", calmax.shape
+            T[:, i, l] = emission_scores[:, i, l] + np.max(calmax, axis=1) # Bx1
+            backpointer[:, i, l] = np.argmax(calmax, axis=1)   # Bx1
+            #print 'prev val ', l,  calmax
+    
+    T[:, -1, :] +=  end_scores # Bx1
+
+    y_pred[:, -1]= np.argmax(T[:, -1, :], axis=1).astype(int)
+    for i in range(N-1)[::-1]:
+        y_pred[:, i] = int(backpointer[:, i+1, y_pred[:, i+1]])
+    scores = np.max(T[:,-1,:], axis=1)
+    
     return (scores, y_pred.tolist())
