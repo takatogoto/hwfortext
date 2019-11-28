@@ -23,6 +23,8 @@ def run_viterbi(emission_scores, trans_scores, start_scores, end_scores):
     assert trans_scores.shape[1] == L
     assert trans_scores.shape[2] == L
     assert emission_scores.shape[2] == L
+    
+    print('B', B)
 
     # score set to 0
     scores = np.zeros(B)
