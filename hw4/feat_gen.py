@@ -8,13 +8,12 @@ def preprocess_corpus(train_sents):
     Of course, this is an optional function.
     Note that you can also call token2features here to aggregate feature counts, etc.
     """
-        # matching lexicons
-    folder = 'lexicon/'
-    loca = folder + 'location'
-    pep = folder + 'people.person.lastnames'
-    bigd = folder + 'bigdict'
-    edcation = folder + 'education.university'
-    tv = folder + 'tv.tv_program'
+    # matching lexicons
+    x1dir = folder + 'location'
+    x2dir = folder + 'people.person.lastnames'
+    x3dir = folder + 'product'
+    x4dir = folder + 'transportation.road'
+    x5dir = folder + 'business.consumer_product'
 
     from pathlib import Path
     def lexicon_list(path):
@@ -26,18 +25,18 @@ def preprocess_corpus(train_sents):
                 lexlist.extend(splitstr)
         return lexlist
     
-    global loca_list, peop_list, bigd_list, ed_list, tv_list
+    global x1_list, x2_list, x3_list, x4_list, x5_list
     
-    if not 'loca_list' in globals():
-        loca_list = lexicon_list(loca)
-    if not 'peop_list' in globals():
-        peop_list = lexicon_list(pep)
-    if not 'bigd_list' in globals():
-        bigd_list = lexicon_list(bigd)
-    if not 'ed_list' in globals():
-        ed_list = lexicon_list(edcation)
-    if not 'tv_list' in globals():
-        tv_list = lexicon_list(tv)
+    if not 'x1_list' in globals():
+        x1_list = lexicon_list(x1dir)
+    if not 'x2_list' in globals():
+        x2_list = lexicon_list(x2dir)
+    if not 'x3_list' in globals():
+        x3_list = lexicon_list(x3dir)
+    if not 'x4_list' in globals():
+        x4_list = lexicon_list(x4dir)
+    if not 'x5_list' in globals():
+        x5_list = lexicon_list(x5dir)
 
 def token2features(sent, i, orig_len, add_neighs = True):
     """Compute the features of a token.
@@ -89,17 +88,17 @@ def token2features(sent, i, orig_len, add_neighs = True):
         ftrs.append("IS_LOWER")
 
     # additional features of the word
-    if word in loca_list:
-        ftrs.append("IS_LOCAL")
-    if word in  peop_list:
-        ftrs.append("IS_PEOPLE")
-    if word in bigd_list:
-        ftrs.append("IS_BIGDICT")
-    if word in ed_list:
-        ftrs.append("IS_EDC")
-    if word in tv_list:
-        ftrs.append("IS_TV")
-
+    if word in x1_list:
+        ftrs.append("IS_X1")
+    if word in x2_list:
+        ftrs.append("IS_X2")
+    if word in x3_list:
+        ftrs.append("IS_X3")
+    if word in x4_list:
+        ftrs.append("IS_X4")
+    if word in x5_list:
+        ftrs.append("IS_X5")
+        
     # previous/next word feats
     if add_neighs:
         if i > 0:
