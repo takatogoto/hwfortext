@@ -8,11 +8,13 @@ def preprocess_corpus(train_sents):
     Of course, this is an optional function.
     Note that you can also call token2features here to aggregate feature counts, etc.
     """
-    # matching lexicons
+        # matching lexicons
     folder = 'lexicon/'
     loca = folder + 'location'
     pep = folder + 'people.person.lastnames'
     bigd = folder + 'bigdict'
+    edcation = folder + 'education.university'
+    tv = folder + 'tv.tv_program'
 
     from pathlib import Path
     def lexicon_list(path):
@@ -24,7 +26,7 @@ def preprocess_corpus(train_sents):
                 lexlist.extend(splitstr)
         return lexlist
     
-    global loca_list, peop_list, bigd_list
+    global loca_list, peop_list, bigd_list, ed_list, tv_list
     
     if not 'loca_list' in globals():
         loca_list = lexicon_list(loca)
@@ -32,6 +34,10 @@ def preprocess_corpus(train_sents):
         peop_list = lexicon_list(pep)
     if not 'bigd_list' in globals():
         bigd_list = lexicon_list(bigd)
+    if not 'ed_list' in globals():
+        ed_list = lexicon_list(edcation)
+    if not 'tv_list' in globals():
+        tv_list = lexicon_list(tv)
 
 def token2features(sent, i, orig_len, add_neighs = True):
     """Compute the features of a token.
@@ -81,7 +87,7 @@ def token2features(sent, i, orig_len, add_neighs = True):
         ftrs.append("IS_UPPER")
     if word.islower():
         ftrs.append("IS_LOWER")
-        
+
     # additional features of the word
     if word in loca_list:
         ftrs.append("IS_LOCAL")
@@ -89,6 +95,10 @@ def token2features(sent, i, orig_len, add_neighs = True):
         ftrs.append("IS_PEOPLE")
     if word in bigd_list:
         ftrs.append("IS_BIGDICT")
+    if word in ed_list:
+        ftrs.append("IS_EDC")
+    if word in tv_list:
+        ftrs.append("IS_TV")
 
     # previous/next word feats
     if add_neighs:
@@ -101,6 +111,8 @@ def token2features(sent, i, orig_len, add_neighs = True):
 
     # return it!
     return ftrs
+
+
     
 if __name__ == "__main__":
     sents = [
