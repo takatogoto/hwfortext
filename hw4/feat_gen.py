@@ -8,7 +8,30 @@ def preprocess_corpus(train_sents):
     Of course, this is an optional function.
     Note that you can also call token2features here to aggregate feature counts, etc.
     """
-    pass
+    # matching lexicons
+    folder = 'lexicon/'
+    loca = folder + 'location'
+    pep = folder + 'people.person.lastnames'
+    bigd = folder + 'bigdict'
+
+    from pathlib import Path
+    def lexicon_list(path):
+        lexpath = Path(path)
+        lexlist=[]
+        with lexpath.open('r', encoding='utf-8') as r:
+            for i, strline in enumerate(r):
+                splitstr = str(strline.encode("utf-8")).split()
+                lexlist.extend(splitstr)
+        return lexlist
+    
+    global loca_list, peop_list, bigd_list
+    
+    if not 'loca_list' in globals():
+        loca_list = lexicon_list(loca)
+    if not 'peop_list' in globals():
+        peop_list = lexicon_list(pep)
+    if not 'bigd_list' in globals():
+        bigd_list = lexicon_list(bigd)
 
 def token2features(sent, i, orig_len, add_neighs = True):
     """Compute the features of a token.
@@ -58,6 +81,14 @@ def token2features(sent, i, orig_len, add_neighs = True):
         ftrs.append("IS_UPPER")
     if word.islower():
         ftrs.append("IS_LOWER")
+        
+    # additional features of the word
+    if word in loca_list:
+        ftrs.append("IS_LOCAL")
+    if word in  peop_list:
+        ftrs.append("IS_PEOPLE")
+    if word in bigd_list:
+        ftrs.append("IS_BIGDICT")
 
     # previous/next word feats
     if add_neighs:
