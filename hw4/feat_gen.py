@@ -9,6 +9,7 @@ def preprocess_corpus(train_sents):
     Note that you can also call token2features here to aggregate feature counts, etc.
     """
     # matching lexicons
+    folder = 'lexicon/'
     x1dir = folder + 'location'
     x2dir = folder + 'people.person.lastnames'
     x3dir = folder + 'product'
