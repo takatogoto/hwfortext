@@ -27,22 +27,20 @@ def preprocess_corpus(train_sents):
         return lexlist
     
     global x1_list, x2_list, x3_list, x4_list, x5_list
+
+    #if not 'x1_list' in globals():
+    #    x1_list = lexicon_list(x1dir)
     
-    """
-    if not 'x1_list' in globals():
-        x1_list = lexicon_list(x1dir)
+    #if not 'x2_list' in globals():
+    #    x2_list = lexicon_list(x2dir)
     
-    if not 'x2_list' in globals():
-        x2_list = lexicon_list(x2dir)
-    """"
     if not 'x3_list' in globals():
         x3_list = lexicon_list(x3dir)
-    """
-    if not 'x4_list' in globals():
-        x4_list = lexicon_list(x4dir)
-    if not 'x5_list' in globals():
-        x5_list = lexicon_list(x5dir)
-    """
+    
+    #if not 'x4_list' in globals():
+    #    x4_list = lexicon_list(x4dir)
+    #if not 'x5_list' in globals():
+    #    x5_list = lexicon_list(x5dir)
 
 def token2features(sent, i, orig_len, add_neighs = True):
     """Compute the features of a token.
