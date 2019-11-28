@@ -28,11 +28,11 @@ def preprocess_corpus(train_sents):
     
     global x1_list, x2_list, x3_list, x4_list, x5_list
 
-    #if not 'x1_list' in globals():
-    #    x1_list = lexicon_list(x1dir)
+    if not 'x1_list' in globals():
+        x1_list = lexicon_list(x1dir)
     
-    #if not 'x2_list' in globals():
-    #    x2_list = lexicon_list(x2dir)
+    if not 'x2_list' in globals():
+        x2_list = lexicon_list(x2dir)
     
     #if not 'x3_list' in globals():
     #    x3_list = lexicon_list(x3dir)
@@ -40,8 +40,8 @@ def preprocess_corpus(train_sents):
     #if not 'x4_list' in globals():
     #    x4_list = lexicon_list(x4dir)
     
-    if not 'x5_list' in globals():
-        x5_list = lexicon_list(x5dir)
+    #if not 'x5_list' in globals():
+    #    x5_list = lexicon_list(x5dir)
 
 def token2features(sent, i, orig_len, add_neighs = True):
     """Compute the features of a token.
@@ -93,21 +93,21 @@ def token2features(sent, i, orig_len, add_neighs = True):
         ftrs.append("IS_LOWER")
 
     # additional features of the word
-    """
+
     if word in x1_list:
         ftrs.append("IS_X1")
     
     if word in x2_list:
         ftrs.append("IS_X2")
     
-    if word in x3_list:
-        ftrs.append("IS_X3")
+    #if word in x3_list:
+    #    ftrs.append("IS_X3")
     
-    if word in x4_list:
-        ftrs.append("IS_X4")
-    """
-    if word in x5_list:
-        ftrs.append("IS_X5")
+    #if word in x4_list:
+    #    ftrs.append("IS_X4")
+
+    #if word in x5_list:
+    #    ftrs.append("IS_X5")
         
     # previous/next word feats
     if add_neighs:
