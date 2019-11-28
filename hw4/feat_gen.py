@@ -35,7 +35,6 @@ def preprocess_corpus(train_sents):
     if not 'x2_list' in globals():
         x2_list = lexicon_list(x2dir)
     """"
-    
     if not 'x3_list' in globals():
         x3_list = lexicon_list(x3dir)
     """
