@@ -49,7 +49,8 @@ def run_viterbi(emission_scores, trans_scores, start_scores, end_scores):
     for i in range(N)[1:]:
         for l in range(L) :
             #calmax = np.tile(trans_scores[:, :, l].reshape(B,L), (B,1)) +T[:,i-1, :] # BxL
-            calmax = np.tile(trans_scores[:, :, l], (B,1)) +T[:,i-1, :]
+            #calmax = np.tile(trans_scores[:, :, l], (B,1)) +T[:,i-1, :]
+            calmax = trans_scores[:, :, l].reshape(B, L) +T[:,i-1, :]
             #print "calmax shape", calmax.shape
             T[:, i, l] = emission_scores[:, i, l] + np.max(calmax, axis=1) # Bx1
             backpointer[:, i, l] = np.argmax(calmax, axis=1)   # Bx1
