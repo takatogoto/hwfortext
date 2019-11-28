@@ -60,7 +60,8 @@ def run_viterbi(emission_scores, trans_scores, start_scores, end_scores):
 
     y_pred[:, -1]= np.argmax(T[:, -1, :], axis=1).astype(int)
     for i in range(N-1)[::-1]:
-        y_pred[:, i] = int(backpointer[:, i+1, y_pred[:, i+1]])
+        #y_pred[:, i] = int(backpointer[:, i+1, y_pred[:, i+1]])
+        y_pred[:, i] = backpointer[:, i+1, y_pred[:, i+1]]
     scores = np.max(T[:,-1,:], axis=1)
     
     return (scores, y_pred.tolist())
