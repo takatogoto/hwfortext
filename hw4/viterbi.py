@@ -39,7 +39,8 @@ def run_viterbi(emission_scores, trans_scores, start_scores, end_scores):
 
     # initialize T
     T[:, 0, :] = start_scores + emission_scores[:, 0, :] # BXL
-    backpointer[:, 0, :] = np.argmax(T[:, 0, :], axis=1).astype(int)
+    #backpointer[:, 0, :] = np.argmax(T[:, 0, :], axis=1).astype(int)
+    backpointer[:, 0, :] = np.tile(np.array(range(L)), (B,1))
     #print 'T i', 0, T[:, 0 , :]
 
     
