@@ -28,8 +28,8 @@ def preprocess_corpus(train_sents):
     
     global x1_list, x2_list, x3_list, x4_list, x5_list
 
-    if not 'x1_list' in globals():
-        x1_list = lexicon_list(x1dir)
+    #if not 'x1_list' in globals():
+    #    x1_list = lexicon_list(x1dir)
     
     if not 'x2_list' in globals():
         x2_list = lexicon_list(x2dir)
@@ -94,8 +94,8 @@ def token2features(sent, i, orig_len, add_neighs = True):
 
     # additional features of the word
 
-    if word in x1_list:
-        ftrs.append("IS_X1")
+    #if word in x1_list:
+    #    ftrs.append("IS_X1")
     
     if word in x2_list:
         ftrs.append("IS_X2")
