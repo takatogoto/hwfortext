@@ -40,8 +40,8 @@ def preprocess_corpus(train_sents):
     if not 'x4_list' in globals():
         x4_list = lexicon_list(x4dir)
     
-    #if not 'x5_list' in globals():
-    #    x5_list = lexicon_list(x5dir)
+    if not 'x5_list' in globals():
+        x5_list = lexicon_list(x5dir)
 
 def token2features(sent, i, orig_len, add_neighs = True):
     """Compute the features of a token.
@@ -106,8 +106,8 @@ def token2features(sent, i, orig_len, add_neighs = True):
     if word in x4_list:
         ftrs.append("IS_X4")
 
-    #if word in x5_list:
-    #    ftrs.append("IS_X5")
+    if word in x5_list:
+        ftrs.append("IS_X5")
         
     # previous/next word feats
     if add_neighs:
