@@ -123,8 +123,8 @@ if __name__ == "__main__":
     parser.add_argument("--outdir", "-o", type=str, default=".", help="location of evaluation files")
     # change default tagger here
     parser.add_argument("--tagger", "-T", default="logreg", choices=["logreg", "crf"], help="which tagger to use")
-    parser.add_argument("--epochs", "-ep", default=1, help="number of epochs")
-    parser.add_argument("--batch_size", "-b", default=4, help="batch size")
+    parser.add_argument("--epochs", "-ep", type=int, default=1, help="number of epochs")
+    parser.add_argument("--batch_size", "-b", type=int, default=4, help="batch size")
     try:
         args = parser.parse_args()
     except IOError as msg:
