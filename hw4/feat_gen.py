@@ -9,7 +9,10 @@ def preprocess_corpus(train_sents):
     Note that you can also call token2features here to aggregate feature counts, etc.
     """
     # matching lexicons
+    # path to the lexicons file
     folder = 'lexicon/'
+    
+    # you may change features
     x1dir = folder + 'location'
     x2dir = folder + 'people.person.lastnames'
     x3dir = folder + 'product'
@@ -17,6 +20,7 @@ def preprocess_corpus(train_sents):
     x5dir = folder + 'business.consumer_product'
 
     from pathlib import Path
+    # function that returns the list of tokens in the file
     def lexicon_list(path):
         lexpath = Path(path)
         lexlist=[]
@@ -26,8 +30,10 @@ def preprocess_corpus(train_sents):
                 lexlist.extend(splitstr)
         return lexlist
     
+    # set the list global scope
     global x1_list, x2_list, x3_list, x4_list, x5_list
-
+    
+    # if preprocessing is called several time, reduce time to copmute
     if not 'x1_list' in globals():
         x1_list = lexicon_list(x1dir)
     
@@ -93,7 +99,7 @@ def token2features(sent, i, orig_len, add_neighs = True):
         ftrs.append("IS_LOWER")
 
     # additional features of the word
-
+    # it's easy, just confirm the token is in the list
     if word in x1_list:
         ftrs.append("IS_X1")
     
