@@ -1,0 +1,4 @@
+readme
+
+set "folder" at line 13 in feat_gen.py.
+then run "python main.py -T crf -ep 100 -b 32".
